@@ -1,0 +1,69 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f5f0;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #d8a25d;
+    padding: 10px 0;
+    text-align: center;
+}
+
+header h1 {
+    color: white;
+    margin: 0;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.admin-login {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.admin-login h2 {
+    margin-bottom: 20px;
+}
+
+.admin-login form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.admin-login label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.admin-login input {
+    width: 200px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.admin-login button {
+    background-color: #d8a25d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.admin-login button:hover {
+    background-color: #b88654;
+}

@@ -1,0 +1,124 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f5f0;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #d8a25d;
+    padding: 10px 0;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+}
+
+main {
+    width: 80%;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.recipe-form {
+    background-color: #fff8e1;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.recipe-form h2 {
+    background-color: #d8a25d;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 0 0 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #ffffff;
+}
+
+.form-group textarea {
+    height: 100px;
+    resize: none;
+}
+
+.file-upload-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.file-upload-group input[type="file"] {
+    display: none;
+}
+
+.file-upload-group #file-name {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #ffffff;
+}
+
+.file-upload-group .file-label {
+    padding: 10px 20px;
+    background-color: #d8a25d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    margin-left: 10px;
+}
+
+.file-upload-group .file-label:hover {
+    background-color: #b88654;
+}
+
+.submit-button {
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.submit-button:hover {
+    background-color: #4cae4c;
+}
