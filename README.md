@@ -1,23 +1,30 @@
 ## 使用技術
 ![Static Badge](https://img.shields.io/badge/HTML-black) ![Static Badge](https://img.shields.io/badge/JavaScript-black) ![Static Badge](https://img.shields.io/badge/css-black) ![Static Badge](https://img.shields.io/badge/PHP-purple) ![Static Badge](https://img.shields.io/badge/MariaDB-lightblue) ![Static Badge](https://img.shields.io/badge/MySQL-lightblue) ![Static Badge](https://img.shields.io/badge/XAMPP-orange) ![Static Badge](https://img.shields.io/badge/Smarty-yellow) ![Static Badge](https://img.shields.io/badge/HTMLQuickForm2-lightgreen)
 
-
-
-
-PHP7＋MariaDB／MySQLマスターブック 永田 順伸 マイナビ出版
-
 # cookingResipe
 
 ## プロジェクトの概要
 - プロジェクトの目的 <br>
-  共有サイトに実装されている，基本的な機能の実現及び，実装方法・技能の習得.
+  共有サイトに実装されている，基本的な機能の実現及び，実装方法・技能の習得
 
-- このプログラムは，動画共有サイトYouTubeにおいて，以下の場合に該当する動画や音楽をダウンロードすることができます．
-  1. YouTubeよって明示的に承認されている場合
-  2. YouTubeおよび（適用される場合）各権利所持者が事前に書面で許可している場合
+- プロジェクトの成り立ち<br>
+  当プロジェクトは，以下の書籍
+  ```
+  永田順伸 『PHP7＋MariaDB／MySQLマスターブック』 マイナビ出版 2018
+  ```
+　に掲載されているサンプルコードをもとに，ManayaTが作成したプロジェクトである
 
+## システム概要
+　このシステムでは，以下の機能を実装している<br>
+　　i.仮会員情報の登録<br>
+　　ii.メールによる確認<br>
+　　iii.会員情報の登録<br>
+　　iV.会員画面の表示<br>
+　　V.レシピの投稿<br>
+　　Vi.レシピの削除<br>
+　　Vii.レシピの検索<br>
+　　Viii.レシピのお気に入り登録<br>
 
- 
 ## 環境
 | 言語・フレームワーク　　　　　 　 | バージョン 　|
 | ------------------ | -------- |
