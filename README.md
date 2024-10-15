@@ -16,14 +16,14 @@
 
 ## システム概要
 　このシステムでは，以下の機能を実装している<br>
-　　i.仮会員情報の登録<br>
-　　ii.メールによる確認<br>
-　　iii.会員情報の登録<br>
-　　iV.会員画面の表示<br>
-　　V.レシピの投稿<br>
-　　Vi.レシピの削除<br>
-　　Vii.レシピの検索<br>
-　　Viii.レシピのお気に入り登録<br>
+　　i.　仮会員情報の登録<br>
+　　ii.　メールによる確認<br>
+　　iii.　会員情報の登録<br>
+　　iV.　会員画面の表示<br>
+　　V.　レシピの投稿<br>
+　　Vi.　レシピの削除<br>
+　　Vii.　レシピの検索<br>
+　　Viii.　レシピのお気に入り登録<br>
 
   画面一覧：https://manayat.github.io/show_cookingResipe/
 
