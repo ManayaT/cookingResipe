@@ -49,8 +49,8 @@ XAMPP files
 │   ├── delete.css
 │   ├── favorite.css
 │   ├── images
-│   │   ├── 13.jpg
-│   │   └── 15.png
+│   │   └── 13.jpg
+│   │
 │   ├── index.css
 │   ├── index_2.php
 │   ├── js
@@ -65,9 +65,9 @@ XAMPP files
 │
 ├── php_libs
 │   ├── class
-│   │   ├── Auth.php
+│   │   ├── Auth.php（サンプルコードのまま）
 │   │   ├── BaseController_2.php
-│   │   ├── BaseModel.php
+│   │   ├── BaseModel.php（サンプルコードのまま）
 │   │   ├── MemberController_2.php
 │   │   ├── MemberModel_2.php
 │   │   ├── PrememberController_2.php
