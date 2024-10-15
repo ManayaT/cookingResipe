@@ -1,9 +1,9 @@
 <?php
-class PrememberController_2 extends BaseController_2 { // 7/28
+class PrememberController_2 extends BaseController_2 {
     public function run(){
         if (isset($_GET['mail_address']) && isset($_GET['link_pass'])){
         // 必要なパラメータがある
-            // データベースを操作します。
+            // データベースを操作
             $PrememberModel = new PrememberModel_2();
             $userdata = $PrememberModel->check_premember($_GET['mail_address'], $_GET['link_pass']);
             if(!empty($userdata) && count($userdata) >= 1){

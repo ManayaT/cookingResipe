@@ -98,12 +98,6 @@ class BaseController_2 {
     //----------------------------------------------------
     public function make_form_controle(){
 
-        $options = [
-            'format'    => 'Ymd',
-            'minYear'   => 1950,
-            'maxYear'   => date("Y"),
-        ];
-
         // formの要素
         $username =  $this->form->addElement('text',  'username', ['placeholder' => 'UserName'], ['label' => 'ユーザ名']);
         $mail_address = $this->form->addElement('text',  'mail_address', ['placeholder' => 'MailAddress'], ['label' => 'メールアドレス']);
@@ -126,12 +120,6 @@ class BaseController_2 {
     //----------------------------------------------------
     public function make_form_controle_2(){
 
-        $options = [
-            'format'    => 'Ymd',
-            'minYear'   => 1950,
-            'maxYear'   => date("Y"),
-        ];
-
         // formの要素
         $recipe_name =  $this->form->addElement('text',  'recipe_name', ['placeholder' => 'recipe_name'], ['label' => 'レシピ名']);
         $recipe_image = $this->form->addElement('file', 'recipe_image');
@@ -141,8 +129,6 @@ class BaseController_2 {
         $recipe_name->addRule('required', 'レシピ名を入力してください。', null, HTML_QuickForm2_Rule::SERVER);
 
         // 画像ファイルの MIME タイプを検証するルールを追加
-        // 別に，標準でバリデートのチェックが行われるのがサーバーサイドであるため
-        // わざわざ(null, HTML_QuickForm2_Rule::SERVER)を明示的に記述する必要はない
         $recipe_image->addRule('mimetype', 'アップロードできるのは画像ファイルのみです。', array('image/jpeg', 'image/png', 'image/gif'));
         $recipe_image->addRule('required', '画像ファイルをアップロードしてください。', null, HTML_QuickForm2_Rule::SERVER);
 

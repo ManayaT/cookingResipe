@@ -2,7 +2,7 @@
 
 class PrememberModel_2 extends BaseModel {
     //----------------------------------------------------
-    // 仮会員登録処理 7/28
+    // 仮会員登録処理
     //----------------------------------------------------
     public function regist_premember($userdata){
         try {
@@ -24,7 +24,7 @@ class PrememberModel_2 extends BaseModel {
     }
 
     //----------------------------------------------------
-    // 仮登録テーブル内にmail_addressが1個以上あればtrueが返ります。7/28
+    // 仮登録テーブル内にmail_addressが1個以上あればtrueが返る
     //----------------------------------------------------
     public function check_mail_address($userdata){
         try {
@@ -44,7 +44,7 @@ class PrememberModel_2 extends BaseModel {
     }
 
     //----------------------------------------------------
-    // 登録確認のメールで送られたリンクをクリックしてアクセスしたときの処理 7/28
+    // 登録確認のメールで送られたリンクをクリックしてアクセスしたときの処理
     //----------------------------------------------------
     public function check_premember($mail_address, $link_pass){
         $data = [];
@@ -62,7 +62,7 @@ class PrememberModel_2 extends BaseModel {
     }
 
     //----------------------------------------------------
-    // 仮登録会員の削除 & member_2テーブルへの登録 7/28（動作確認済み）
+    // 仮登録会員の削除 & member_2テーブルへの登録
     //----------------------------------------------------
     public function delete_premember_and_regist_member($userdata){
         try {
@@ -89,7 +89,7 @@ class PrememberModel_2 extends BaseModel {
     }
 
     //----------------------------------------------------
-    // recipeテーブルへの登録（完成）
+    // recipeテーブルへの登録
     //----------------------------------------------------
     public function regist_recipe($imagedata, $user_id, $recipe_path){
         try {
