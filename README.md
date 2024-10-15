@@ -1,5 +1,5 @@
 ## 使用技術
-![Static Badge](https://img.shields.io/badge/HTML-black) ![Static Badge](https://img.shields.io/badge/JavaScript-black) ![Static Badge](https://img.shields.io/badge/css-black) ![Static Badge](https://img.shields.io/badge/PHP-purple) ![Static Badge](https://img.shields.io/badge/MariaDB-lightblue) ![Static Badge](https://img.shields.io/badge/XAMPP-orange) ![Static Badge](https://img.shields.io/badge/Smarty-yellow) ![Static Badge](https://img.shields.io/badge/HTMLQuickForm2-lightgreen)
+![Static Badge](https://img.shields.io/badge/HTML-black) ![Static Badge](https://img.shields.io/badge/JavaScript-black) ![Static Badge](https://img.shields.io/badge/css-black) ![Static Badge](https://img.shields.io/badge/PHP-purple) ![Static Badge](https://img.shields.io/badge/MariaDB-lightblue) ![Static Badge](https://img.shields.io/badge/MySQL-lightblue) ![Static Badge](https://img.shields.io/badge/XAMPP-orange) ![Static Badge](https://img.shields.io/badge/Smarty-yellow) ![Static Badge](https://img.shields.io/badge/HTMLQuickForm2-lightgreen)
 
 
 
@@ -19,12 +19,13 @@ PHP7＋MariaDB／MySQLマスターブック 永田 順伸 マイナビ出版
 
  
 ## 環境
-| 言語・フレームワーク  | バージョン |
-| --------------------- | ---------- |
+| 言語・フレームワーク　　　　　 　 | バージョン 　|
+| ------------------ | -------- |
 | HTML               | HTML5    |
 | CSS                | CSS3     |
 | PHP                | 7.4.33   |
 | MariaDB            | 10.4.27  |
+| MySQL              | 7.4.33   |
 | XAMPP              | 7.4.33   |
 | Smarty             | 3.1.30   |
 
@@ -80,73 +81,109 @@ XAMPP files
 ```
 
 ## 環境構築
-- FFmpegのインストール
-```
-  $ brew install ffmpeg
-```
-- プロジェクトをMavanを使用して立ち上げ，Jsoupをロードする
-```
-<dependencies>
-    <dependency>
-        <groupId>org.jsoup</groupId>
-        <artifactId>jsoup</artifactId>
-        <version>1.16.1</version>
-    </dependency>
-</dependencies>
-```
+- XAMPPのインストール<br>
+  SOURCEFORGEよりMac OS X用 バージョン7.4.33-0のものをインストールすること
 
-## 変数設計
-| 変数  | 役割 | 状態 |
-| --------------------- | ---------- | ---------- |
-| inputURL                | 入力URLの保持     | private     |
-| audioURL                | 音声データURLの保持     | private     |
-| videoURL                | 映像データURLの保持     | private     |
-| movieURL                | 音声+映像データURLの保持     | private     |
-| htmlContent                | Jsoupで取得したHTMLの保持     | private     |
-| itagAudioList                | 指定値のitagリストを保持     | private     |
-| itagVideoList                | 指定値のitagリストを保持     | private     |
-| itagMovieList                | 指定値のitagリストを保持     | private     |
-| inputQuality                | 入力画質保持変数     | private     |
-| extension                | 入力拡張子保持変数     | private     |
-| workingPath                | 保存先のパスを保持     | private     |
-| fileName                | 保存時のファイル名を保持     | private     |
-| currentTime                | 一時保存ファイルの仮名用に現在時刻を保持     | private     |
-| contentSize                | プログレスパーの表示用     | private     |
+- Apacheのセットアップ
+  ```
+    /Applications/XAMPP/xamppfiles
+  ```
+  に配置されている，httpd.confファイルにアクセスし，Apacheが使用するポートを 80 番に設定する<br>
+  次に，Apacheに組み込むモジュールとして
+  ```
+  mod authn file.so
+  ```
+  を有効にする
+
+  さらに，ServerAdminを自身のメールアドレスに設定し，ServerNameをlocalhostに設定する<br>
+  続けて，DocumentRootを
+  ```
+  /Applications/XAMPP/xamppfiles/htdocs
+  ```
+  とし，当該ディレクトリに配置したPHPファイルやHTMLファイルがブラウザ上で確認できるようにする<br>
+  加えて，Al-lowOverrideをAllとし，DirectoryIndexをDirectoryIndex index.php index.HTMLに設定する
+
+- PHPの設定
+  ```
+  /Applications/XAMPP/xamppfiles/etc
+  ```
+  に配置されている，php.ini フォルダにアクセスする<br>
+  そして，de- fault charset を UTF-8 に設定する<br>
+  次に，date.timezoneをAsia/Tokyoに設定する.さらに，mbstringを以下のように設定する
+  ```
+  mbstring.language=Japanese
+  mbstring.encoding translation=On
+  mbstring.detect order=UTF-8
+  mbstring.substitute character=none;
+  ```
+  加えて，セキュリティ対策としてexpose phpをoffに変更し，ヘッダからPHPのバージョンを削除するように設定する<br>
+  続けて，session.sid lengthを 32 に変更し，session.sid per characterを 5 に設定する
+
+
+- データベースの作成<br>
+  1, MariaDBにRootユーザーでログイン
+  
+  2, 管理者ユーザーの作成を行う
+  ```
+  	create user 'sample'@'localhost' identified by 'password';
+  ```
+  3, 作成したissueにUSE文を使用してデータベースの作成を行う。
+  ```
+  	create database sampledb character set utf8 collate utf8_general_ci;
+  	grant all privileges ON issuedb.* TO 'sample'@'localhost';
+  	flush privileges;
+  ```
+  4, 同梱の.splファイルを元に，データベースを作成する
+  
+  5, htdocsディレクトリのimegesフォルダに権限を与える
+  ```
+  	chmod 777 /Applications/XAMPP/xamppfiles/htdocs/images
+  ```
+
+## 実行方法
+- XAMPPの起動<br>
+  1, XAMPPを起動し全てのサーバーを実行可能状態とする<br>
+  2, http://localhost/index_2.phpにアクセスする
+  
+- レシピ共有サイトの動作確認方法<br>
+  1, 会員登録をおこなう<br>
+  2, 登録したメールアドレスとパスワードでログインを行う<br>
+  3, トップ画面に遷移後，任意のボタンをクリックし，動作確認を行う
 
 ```mermaid
-graph TD;
-  initial(.jarファイルの起動)-->inputURL[任意の動画URLを入力];
-  inputURL-->connectHTML[HTMLの取得];
+erDiagram
 
-  connectHTML-->AnalysisURL{取得したHTMLテキストにitagが存在するか};
-  AnalysisURL-->|True| inputExtension[任意の出力用拡張子を入力];
-  AnalysisURL-->|False| inputURL;
+recipe ||--o{ favorite : ""
 
-  inputExtension-->whitchExtension{拡張子の種類};
-  whitchExtension-->|.mp4 or .mp3| inputFileLocation[保存先の入力];
-  whitchExtension-->|other| inputExtension;
+  member_2 {
+    MEDIUMINT id PK "ID"
+    VARCHAR mail_address "メールアドレス"
+    VARCHAR username "ユーザー名"
+    VARCHAR password "パスワード"
+    DATETIME reg_date "登録日"
+    DATETIME cancel_date "退会日"
+  }
 
-  inputFileLocation-->existsLocation{保存先が存在しているか};
-  existsLocation-->|True| inputFilename[ファイルの出力名を入力];
-  existsLocation-->|False| inputFileLocation;
+  premember_2 {
+    MEDIUMINT id PK "ID"
+    VARCHAR mail_address "メールアドレス"
+    VARCHAR username "ユーザー名"
+    VARCHAR password "パスワード"
+    VARCHAR link_pass "リンクパス"
+    DATETIME reg_date "登録日"
+  }
 
-  inputFilename-->videoTitle{出力名に禁則文字が含まれていないか};
-  videoTitle-->|True| getDataURL[HTMLに対してスクレイピングの実行];
-  videoTitle-->|False| inputFilename;
+  recipe {
+    MEDIUMINT id PK "ID"
+    SMALLINT user_id "ユーザーID"
+    VARCHAR recipe_title "レシピタイトル"
+    VARCHAR recipe_picture "レシピ画像"
+    VARCHAR recipe_text "レシピ内容"
+  }
 
-  getDataURL-->audioDownload[音声データのダウンロード];
-
-  audioDownload-->download_1{ダウンロードが成功したか};
-  download_1-->|True| videoDownload[動画データのダウンロード];
-  download_1-->|False| deleteFile[不要データの削除];
-
-  videoDownload-->download_2{ダウンロードが成功したか};
-  download_2-->|True| composeData[FFmpegを用いてデータを合成];
-  download_2-->|False| deleteFile[不要データの削除];
-
-  composeData-->deleteFile[不要データの削除];
-
-  deleteFile-->continue{実行を続けるかどうか};
-  continue-->|True| inputURL;
-  continue-->|False| movieEnd(終了);
+  favorite {
+    mediumint id PK "ID"
+    smallint user_id "ユーザーID"
+    smallint recipe_id "レシピID"
+  }
 ```
