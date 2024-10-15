@@ -29,7 +29,7 @@ ini_set( "error_reporting", E_ALL );
 //----------------------------------------------------
 
 // データベース接続ユーザー名
-define("_DB_USER", "issue");
+define("_DB_USER", "sample");
 
 // データベース接続パスワード
 define("_DB_PASS", "password");
