@@ -25,6 +25,8 @@
 　　Vii.レシピの検索<br>
 　　Viii.レシピのお気に入り登録<br>
 
+  画面一覧：https://manayat.github.io/show_cookingResipe/
+
 ## 環境
 | 言語・フレームワーク　　　　　 　 | バージョン 　|
 | ------------------ | -------- |
