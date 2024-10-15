@@ -2,7 +2,7 @@
 
 class MemberModel_2 extends BaseModel {
     //----------------------------------------------------
-    // 会員のメールアドレスと同じものがないか調べる。7/28
+    // 会員のメールアドレスと同じものがないか調べる
     //----------------------------------------------------
     public function check_mail_address($userdata){
         try {
@@ -31,7 +31,6 @@ class MemberModel_2 extends BaseModel {
             $sql= "SELECT * FROM member_2 WHERE mail_address = :mail_address limit 1";
             $stmh = $this->pdo->prepare($sql);
             $stmh->bindValue(':mail_address',  $mail_address,  PDO::PARAM_STR );
-            // sqlによるデータベースへのアクセスを実行
             $stmh->execute();
             // ユーザが存在する場合，データが取得できる
             $data = $stmh->fetch(PDO::FETCH_ASSOC);
@@ -278,7 +277,7 @@ class MemberModel_2 extends BaseModel {
     }
 
     //----------------------------------------------------
-    // recipeテーブルへの登録（完成）
+    // recipeテーブルへの登録
     //----------------------------------------------------
     public function set_favorite($user_id, $recipe_id){
         try {
@@ -299,7 +298,7 @@ class MemberModel_2 extends BaseModel {
     }
 
     //----------------------------------------------------
-    // 会員のidとお気に入りidの組み合わせが重複しているものがないか調べる。7/28
+    // 会員のidとお気に入りidの組み合わせが重複しているものがないか調べる
     //----------------------------------------------------
     public function check_favorite($user_id, $recipe_id) {
         try {

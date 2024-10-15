@@ -32,10 +32,11 @@ class MemberController_2 extends BaseController_2
                 $this->auth->logout();
                 $this->screen_login();
                 break;
-            // 会員情報の修正（使わないかも）
+            // 会員情報の修正（未実装）
             case "modify":
                 //$this->screen_modify();
                 break;
+
             case "delete":
                 $this->screen_delete();
                 break;
@@ -66,7 +67,7 @@ class MemberController_2 extends BaseController_2
                 $this->favorite_top();
                 break;
 
-            default: // 会員トップ画面に飛ぶ？
+            default:
                 $this->screen_top();
         }
     }
@@ -88,7 +89,7 @@ class MemberController_2 extends BaseController_2
         }
     }
     //----------------------------------------------------
-    // ログイン画面表示(07/11)
+    // ログイン画面表示
     //----------------------------------------------------
     public function screen_login()
     {
@@ -102,10 +103,10 @@ class MemberController_2 extends BaseController_2
         $this->view_display();
     }
 
-    // ログイン（やっと完成）
+    // ログイン
     public function do_authenticate()
     {
-        // データベースを操作します。
+        // データベースを操作
         $MemberModel = new MemberModel_2();
         // 会員名から，ユーザ情報をDBより取得
         $userdata = $MemberModel->get_authinfo($_POST['mail_address']);
@@ -126,7 +127,7 @@ class MemberController_2 extends BaseController_2
     }
 
     //----------------------------------------------------
-    // トップ画面（多分かんせい）
+    // トップ画面
     //----------------------------------------------------
     public function screen_top()
     {
@@ -134,7 +135,7 @@ class MemberController_2 extends BaseController_2
         $this->user_id = isset($_SESSION[_MEMBER_AUTHINFO]['user_id']) ? $_SESSION[_MEMBER_AUTHINFO]['user_id'] : null;
         $this->title = '会員トップ画面';
         
-        // データベースを操作します。
+        // データベースを操作
         $MemberModel = new MemberModel_2();
         list($data, $count) = $MemberModel->get_recipe_list($this->user_id);
         list($data, $links) = $this->make_page_link($data);
@@ -147,7 +148,7 @@ class MemberController_2 extends BaseController_2
     }
 
     //----------------------------------------------------
-    // 会員登録画面(会員登録機能は完成7/28) 
+    // 会員登録画面 
     //----------------------------------------------------
     public function screen_regist($auth = "")
     {
@@ -155,10 +156,9 @@ class MemberController_2 extends BaseController_2
         $btn2 = "";
         $this->file = "sign_up.tpl"; // デフォルト
 
-        //$this->form->addDataSource(new HTML_QuickForm2_DataSource_Array(['birthday' => $date_defaults]));
-        $this->make_form_controle(); // <-おそらくこいつが QuickForm2 の変数を定義している
+        $this->make_form_controle();
 
-        // フォームの妥当性検証(おそらくこのバリデートは入力不備の確認？)
+        // フォームの妥当性検証
         if (!$this->form->validate()) {
             $this->action = "form";
         }
@@ -167,7 +167,6 @@ class MemberController_2 extends BaseController_2
         if ($this->action == "form") {
             $this->title = '新規登録画面';
             $this->next_type = 'regist';
-            //$this->next_action = 'confirm';
             $this->next_action = 'confirm';
             $btn = '確認画面へ';
 
@@ -185,15 +184,15 @@ class MemberController_2 extends BaseController_2
             if ($this->action == "complete" && isset($_POST['submit']) && $_POST['submit'] == '登録') {
                 
                 /*
-                // テスト用コード(要素のPOSTは正常に動いています！)
+                // テスト用コード
                 $userdata = $this->form->getValue();
                 echo $userdata['mail_address'];
                 */
                 
                 // データベースを操作します。
                 $PrememberModel = new PrememberModel_2();
-                // データベースを操作します。
                 $MemberModel = new MemberModel_2();
+
                 $userdata = $this->form->getValue();
                 if ($MemberModel->check_mail_address($userdata) || $PrememberModel->check_mail_address($userdata)) {
                     $this->title = '新規登録画面';
@@ -201,27 +200,19 @@ class MemberController_2 extends BaseController_2
                     $this->next_type = 'regist';
                     $this->next_action = 'confirm';
                     $btn = '確認画面へ';
-                } else { //now
+                } else {
 
-                    // システム側から利用するときに利用
+                    // システム側から利用するときに利用（未実装）
                     if ($this->is_system && is_object($auth)) {
                         $userdata['password'] = $auth->get_hashed_password($userdata['password']);
 
-                    // ただのpremember登録はこっち
+                    // premember登録
                     } else {
                         $userdata['password'] = $this->auth->get_hashed_password($userdata['password']);
                     }
 
-                    /*
-                    $userdata['birthday'] = sprintf("%04d%02d%02d",
-                        $userdata['birthday']['Y'],
-                        $userdata['birthday']['m'],
-                        $userdata['birthday']['d']);
-                    */
-
-                    // システム側から利用するときに利用
+                    // システム側から利用するときに利用（未実装）
                     if ($this->is_system) {
-                        //$MemberModel->regist_member($userdata);
                         $this->title = '登録完了画面';
                         $this->message = "登録を完了しました。";
 
@@ -243,7 +234,7 @@ class MemberController_2 extends BaseController_2
             }
         }
 
-        // ページの繰り返し(今回は確認画面は必要ないので，ページの繰り返しは Validate に引っかかった時だけ)
+        // ページの繰り返し(今回は確認画面は必要ないので，ページの繰り返しは Validate に引っかかった場合のみ)
         $this->next_action = 'confirm';
 
         $this->form->addElement('submit', 'submit', ['value' =>$btn]);
@@ -254,18 +245,17 @@ class MemberController_2 extends BaseController_2
 
 
     //----------------------------------------------------
-    // レシピ登録画面(完成)
+    // レシピ登録画面
     //----------------------------------------------------
-    public function screen_regist_2($auth = '') // $auth = '' が不要になりそう
+    public function screen_regist_2($auth = '')
     {
         $btn = "";
         $btn2 = "";
-        $this->file = "upload.tpl"; // デフォルト
+        $this->file = "upload.tpl";
 
-        $this->make_form_controle_2(); // <-おそらくこいつが QuickForm2 の変数を定義している
-                                     //   make_form_controle_2を新たに作成する必要あり
+        $this->make_form_controle_2();
 
-        // フォームの妥当性検証(おそらくこのバリデートは入力不備の確認？)
+        // フォームの妥当性検証
         if (!$this->form->validate()) {
             $this->action = "form";
         }
@@ -278,7 +268,6 @@ class MemberController_2 extends BaseController_2
 
         // formの入力に問題がない場合の処理
         } else {
-            // ここは確認画面の表示
             
             // 送信処理を行うためのフラグを管理
             if ($this->action == "confirm") {
@@ -287,13 +276,12 @@ class MemberController_2 extends BaseController_2
                 $this->next_action = 'complete';
             }
             
-            // 使用する箇所
             if ($this->action == "complete" && isset($_POST['submit']) && $_POST['submit'] == '投稿') {
                 
                 $this->view->assign('username', $_SESSION[_MEMBER_AUTHINFO]['username']);
                 $this->user_id = isset($_SESSION[_MEMBER_AUTHINFO]['user_id']) ? $_SESSION[_MEMBER_AUTHINFO]['user_id'] : null;
 
-                // データベースを操作します。
+                // データベースを操作
                 $PrememberModel = new PrememberModel_2();
                 $MemberModel = new MemberModel_2();
 
@@ -315,15 +303,12 @@ class MemberController_2 extends BaseController_2
                     echo "権限が不足しています.";
                 }
 
-                // データベースを操作します。
+                // データベースを操作
                 $PrememberModel->regist_recipe($imagedata, $this->user_id, 'images/'. $temp_img_name['next_id'] . $img_extension);
                 
                 $confirm = "<script type='text/javascript'>confirm('レシピを投稿しました');</script>";
                 echo $confirm;
 
-                // ほんとにindex.tplでいいのか？
-                //$this->file = "user_top.tpl";
-                //$this->screen_top();
                 header("Location: /index_2.php");
             }
         }
@@ -339,12 +324,12 @@ class MemberController_2 extends BaseController_2
     }
 
     //----------------------------------------------------
-    // レシピ表示（コメントとお気に入りの混在？）
+    // レシピ表示
     //----------------------------------------------------
     public function view_recipe()
     {
         /*
-        // idの取得はこれでオッケー
+        // テスト用コード
         $temp = $_GET['id'];
         echo "レシピのidは" . $temp;
         */
@@ -355,7 +340,7 @@ class MemberController_2 extends BaseController_2
             $this->view->assign('username', $_SESSION[_MEMBER_AUTHINFO]['username']);
             $this->title = 'レシピ閲覧画面';
 
-            // データベースを操作します。
+            // データベースを操作
             $MemberModel = new MemberModel_2();
             $recipe_data = $MemberModel->get_recipe($_GET['id']);
             
@@ -364,17 +349,18 @@ class MemberController_2 extends BaseController_2
             $this->file = "recipe.tpl";
             $this->view_display();
         } else {
-            // ユーザーIDが設定されていない場合、ログイン画面にリダイレクトするなどの処理を追加します。
+            // ユーザーIDが設定されていない場合、ログイン画面にリダイレクトする
             $this->screen_login();
         }
     }
 
 
     //----------------------------------------------------
-    // お気に入りレシピの登録（完成）
+    // お気に入りレシピの登録
     //----------------------------------------------------
     public function regist_favorite(){
         /*
+        // テスト用コード
         $temp = $_GET['id'];
         echo "レシピのidは" . $_GET['id'];
 
@@ -386,7 +372,7 @@ class MemberController_2 extends BaseController_2
 
         $this->view->assign('username', $_SESSION[_MEMBER_AUTHINFO]['username']);
 
-        // データベースを操作します。
+        // データベースを操作
         $MemberModel = new MemberModel_2();
         // 重複していない場合のみ追加
         if (!$MemberModel -> check_favorite($this -> user_id, $_GET['id'])){
@@ -396,21 +382,16 @@ class MemberController_2 extends BaseController_2
 
 
     //----------------------------------------------------
-    // 削除画面（完成）
+    // 削除画面
     //----------------------------------------------------
     public function screen_delete()
     {
         
         $this->user_id = isset($_SESSION[_MEMBER_AUTHINFO]['user_id']) ? $_SESSION[_MEMBER_AUTHINFO]['user_id'] : null;
-        // データベース
+        // データベースを操作
         $MemberModel = new MemberModel_2();
 
         if ($this->action == "complete") {
-
-            /* 動作確認済み
-            $alert = "<script type='text/javascript'>alert('削除を実行するよ');</script>";
-            echo $alert;
-            */
 
             $MemberModel->delete_recipe($_GET['id']);
 
@@ -424,7 +405,7 @@ class MemberController_2 extends BaseController_2
                 $this->view->assign('username', $_SESSION[_MEMBER_AUTHINFO]['username']);
                 $this->title = 'レシピ閲覧画面';
     
-                // データベースを操作します。
+                // データベースを操作
                 $recipe_data = $MemberModel->get_recipe($_GET['id']);
                 
                 $this->view->assign('data', $recipe_data);
@@ -432,14 +413,14 @@ class MemberController_2 extends BaseController_2
                 $this->file = "delete.tpl";
                 $this->view_display();
             } else {
-                // ユーザーIDが設定されていない場合、ログイン画面にリダイレクトするなどの処理を追加します。
+                // ユーザーIDが設定されていない場合、ログイン画面にリダイレクトする
                 $this->screen_login();
             }
         }
     }
 
     //----------------------------------------------------
-    // レシピ一覧&検索画面（完成）
+    // レシピ一覧&検索画面
     //----------------------------------------------------
     public function recipe_top()
     {
@@ -456,7 +437,7 @@ class MemberController_2 extends BaseController_2
             $sql_search_key = $_POST['search_key'];
         }
         
-        // データベースを操作します。
+        // データベースを操作
         $MemberModel = new MemberModel_2();
         list($data, $count) = $MemberModel->get_recipe_all($sql_search_key);
         list($data, $links) = $this->make_page_link($data);
@@ -472,7 +453,7 @@ class MemberController_2 extends BaseController_2
     }
 
     //----------------------------------------------------
-    // お気に入り一覧画面（完成）
+    // お気に入り一覧画面
     //----------------------------------------------------
     public function favorite_top()
     {
@@ -480,15 +461,12 @@ class MemberController_2 extends BaseController_2
         $this->view->assign('username', $_SESSION[_MEMBER_AUTHINFO]['username']);
         $this->user_id = isset($_SESSION[_MEMBER_AUTHINFO]['user_id']) ? $_SESSION[_MEMBER_AUTHINFO]['user_id'] : null;
         
-        // データベースを操作します。
+        // データベースを操作
         $MemberModel = new MemberModel_2();
         list($data, $count) = $MemberModel->get_favorite_all($this->user_id);
-        // list($data, $links) = $this->make_page_link($data);
 
         $this->view->assign('count', $count);
         $this->view->assign('data', $data);
-        // $this->view->assign('search_key', $disp_search_key);
-        // $this->view->assign('links', $links['all']);
         $this->title = 'お気に入りレシピ一覧';
         
         $this->file = 'favorite.tpl';
@@ -496,11 +474,8 @@ class MemberController_2 extends BaseController_2
     }
 
     //----------------------------------------------------
-    // メール関係（多分 username 以外はいじらなくても大丈夫）
-    //----------------------------------------------------
-    //
     // 仮登録者へメール送信
-    //
+    //----------------------------------------------------
     public function mail_to_premember($userdata)
     {
 
