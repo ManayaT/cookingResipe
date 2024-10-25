@@ -139,7 +139,7 @@ XAMPP files
   3, 作成したsampleにUSE文を使用してデータベースの作成を行う。
   ```
   create database sampledb character set utf8 collate utf8_general_ci;
-  grant all privileges ON issuedb.* TO 'sample'@'localhost';
+  grant all privileges ON sampledb.* TO 'sample'@'localhost';
   flush privileges;
   ```
   4, 同梱の.splファイルを元に，データベースを作成する
